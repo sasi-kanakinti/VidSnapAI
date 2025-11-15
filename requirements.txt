@@ -1,9 +1,5 @@
 Flask
 werkzeug
-TTS
-soundfile
-numpy
-scipy
-psutil
-ffmpeg-python
 python-dotenv
+openai>=1.40.0
+ffmpeg-python

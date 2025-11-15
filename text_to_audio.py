@@ -1,37 +1,37 @@
-import os
-import logging
-from TTS.api import TTS
+# import os
+# import logging
+# from TTS.api import TTS
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
-# Load TTS model (loaded once, globally)
-# This is a lightweight high-quality English model
-tts = None
-tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
-
-
-def text_to_speech_file(text, folder):
-    """
-    Generates audio.mp3 using Coqui TTS.
-    Works on Windows AND Railway.
-    No API keys needed.
-    """
-    global tts
-    if tts is None:
-        print("Loading Coqui TTS model…")
-        tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
-
-    output_path = os.path.join("user_uploads", folder, "audio.mp3")
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
-    logging.info("Generating TTS using Coqui TTS...")
-
-    # Synthesize speech to file
-    tts.tts_to_file(text=text, file_path=output_path)
+# # Load TTS model (loaded once, globally)
+# # This is a lightweight high-quality English model
+# tts = None
+# tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
 
 
-    logging.info(f"Saved audio: {output_path}")
-    return output_path
+# def text_to_speech_file(text, folder):
+#     """
+#     Generates audio.mp3 using Coqui TTS.
+#     Works on Windows AND Railway.
+#     No API keys needed.
+#     """
+#     global tts
+#     if tts is None:
+#         print("Loading Coqui TTS model…")
+#         tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
+
+#     output_path = os.path.join("user_uploads", folder, "audio.mp3")
+#     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+#     logging.info("Generating TTS using Coqui TTS...")
+
+#     # Synthesize speech to file
+#     tts.tts_to_file(text=text, file_path=output_path)
+
+
+#     logging.info(f"Saved audio: {output_path}")
+#     return output_path
 
 
 #import os
@@ -73,3 +73,32 @@ def text_to_speech_file(text, folder):
 
 #     logging.info("Saved audio: %s", output_path)
 #     return output_path
+
+
+#OPENAI VERSION
+import os
+import logging
+from openai import OpenAI
+
+logging.basicConfig(level=logging.INFO)
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+def text_to_speech_file(text, folder):
+
+    output_path = os.path.join("user_uploads", folder, "audio.mp3")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    logging.info("Generating TTS using OpenAI...")
+
+    response = client.audio.speech.create(
+        model="gpt-4o-mini-tts",
+        voice="alloy",
+        input=text
+    )
+
+    with open(output_path, "wb") as f:
+        f.write(response.read())
+
+    logging.info(f"Saved audio: {output_path}")
+    return output_path
