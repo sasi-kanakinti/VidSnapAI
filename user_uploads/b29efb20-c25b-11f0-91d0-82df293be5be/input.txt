@@ -1,0 +1,10 @@
+file 'Toman-1.webp'
+duration 1
+file 'Toman-2.webp'
+duration 1
+file 'Toman-3.webp'
+duration 1
+file 'Toman-4.jpg'
+duration 1
+file 'Toman-5.jpg'
+duration 1
