@@ -1,4 +1,9 @@
-Flask>=2.0
-python-dotenv
-elevenlabs
+Flask
 werkzeug
+TTS
+soundfile
+numpy
+scipy
+psutil
+ffmpeg-python
+python-dotenv
