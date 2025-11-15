@@ -1,0 +1,8 @@
+file 'childe.jpg'
+duration 1
+file 'Childe_Zhongli.jpg'
+duration 1
+file 'tartaglia-childe-genshin-impact-online-video-game-wallpaper-3840x2160_54.jpg'
+duration 1
+file 'tartaglia-s-selfie-with-zhongli-genshin-impact-anime-video-game-wallpaper-3840x2160_54.jpg'
+duration 1
