@@ -4,7 +4,7 @@ A fully automated reel/video generator that converts text into audio and merges 
 Deployed on **Render** using Docker.
 
 ## 🚀 Live Demo  
-👉 https://vidsnapai-2vcs.onrender.com
+👉 https://web-production-3653.up.railway.app/
 
 ## ✨ Features
 - Text-to-Speech using **gTTS**
