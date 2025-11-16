@@ -81,11 +81,14 @@ def make_reel(folder):
     cmd = (
         f"ffmpeg -y -f concat -safe 0 -i {shlex.quote(input_txt)} "
         f"-i {shlex.quote(audio_mp3)} "
-        f"-vf \"scale=1080:1920:force_original_aspect_ratio=decrease,"
-        f"pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black\" "
-        f"-c:v libx264 -c:a aac -shortest -r 30 -pix_fmt yuv420p "
+        f"-vf \"scale=720:1280:force_original_aspect_ratio=decrease,"
+        f"pad=720:1280:(ow-iw)/2:(oh-ih)/2:black\" "
+        f"-c:v libx264 -preset ultrafast -pix_fmt yuv420p "
+        f"-b:v 1M -maxrate 1M -bufsize 1M "
+        f"-c:a aac -shortest -r 30 "
         f"{shlex.quote(output_mp4)}"
     )
+
 
     logging.info("Running FFmpeg...")
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
