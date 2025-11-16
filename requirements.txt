@@ -1,9 +1,6 @@
-gTTS
 Flask
 werkzeug
-soundfile
-numpy
-scipy
+gTTS
 psutil
 ffmpeg-python
 python-dotenv
