@@ -1,37 +1,32 @@
 import os
 import logging
-from TTS.api import TTS
+from gtts import gTTS
 
 logging.basicConfig(level=logging.INFO)
-
-# Load TTS model (loaded once, globally)
-# This is a lightweight high-quality English model
-tts = None
-tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
 
 
 def text_to_speech_file(text, folder):
     """
-    Generates audio.mp3 using Coqui TTS.
-    Works on Windows AND Railway.
+    Generates audio.mp3 using gTTS (Google Text-to-Speech).
+    Fully free, lightweight, and works on Render / Railway / Fly.io.
     No API keys needed.
     """
-    global tts
-    if tts is None:
-        print("Loading Coqui TTS model…")
-        tts = TTS("tts_models/en/ljspeech/tacotron2-DDC")
 
     output_path = os.path.join("user_uploads", folder, "audio.mp3")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    logging.info("Generating TTS using Coqui TTS...")
+    logging.info("Generating TTS using gTTS...")
 
-    # Synthesize speech to file
-    tts.tts_to_file(text=text, file_path=output_path)
-
+    try:
+        tts = gTTS(text=text, lang='en')
+        tts.save(output_path)
+    except Exception as e:
+        logging.error(f"TTS generation failed: {e}")
+        raise
 
     logging.info(f"Saved audio: {output_path}")
     return output_path
+
 
 
 #import os

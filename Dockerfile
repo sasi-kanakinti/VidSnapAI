@@ -1,30 +1,22 @@
-# Use Python slim
-FROM python:3.11-slim
+# Use lightweight Python image
+FROM python:3.10-slim
 
-# Avoid tzdata interactive prompts
-ENV DEBIAN_FRONTEND=noninteractive
+# Install FFmpeg
+RUN apt-get update && apt-get install -y ffmpeg
 
-# Install system-level dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ffmpeg \
-    libsndfile1 \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set work directory
 WORKDIR /app
 
-# Copy project files into container
-COPY . /app
+# Copy requirements first (better caching)
+COPY requirements.txt .
 
-# Upgrade pip
-RUN pip install --upgrade pip
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Python dependencies from requirements.txt
-RUN pip install -r requirements.txt
+# Copy project files
+COPY . .
 
-# Expose Railway port
-ENV PORT=8080
+# Expose Flask port
+EXPOSE 10000
 
-# Start the app
+# Start app
 CMD ["python", "main.py"]
